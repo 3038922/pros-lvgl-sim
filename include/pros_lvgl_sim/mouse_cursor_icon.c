@@ -1,8 +1,4 @@
-
-#include "./pros-lvgl-sim.hpp"
-#if USE_PROS_LVGL_SIM == 1
 #include "lvgl/lvgl.h"
-
 const uint8_t mouse_cursor_icon_map[] = {
 #if LV_COLOR_DEPTH == 1 || LV_COLOR_DEPTH == 8
     /*Pixel format: Alpha 8 bit, Red: 3 bit, Green: 3 bit, Blue: 2 bit*/
@@ -3385,5 +3381,3 @@ lv_img_dsc_t mouse_cursor_icon = {
     .header.cf = LV_IMG_CF_TRUE_COLOR_ALPHA,
     .data = mouse_cursor_icon_map,
 };
-#else
-#endif
