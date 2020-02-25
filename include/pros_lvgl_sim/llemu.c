@@ -13,7 +13,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "./pros-lvgl-sim.hpp"
+
+#include "pros_lvgl_sim_conf.hpp"
 #if USE_PROS_LVGL_SIM == 1
 #define _GNU_SOURCE
 // NOTE: this would normally be in the C file, but it won't compile that way
@@ -82,7 +83,7 @@ static lv_obj_t *_create_lcd(void)
     screen_style.body.main_color = LV_COLOR_MAKE(0x5A, 0xBC, 0x03);
     screen_style.body.grad_color = LV_COLOR_MAKE(0x5A, 0xBC, 0x03);
     screen_style.text.color = LV_COLOR_MAKE(0x32, 0x3D, 0x13);
-    screen_style.text.font = &pros_font_dejavu_mono_20;
+    //screen_style.text.font = &pros_font_dejavu_mono_20;
 
     lv_style_copy(&button_style, &lv_style_plain);
     button_style.body.main_color = LV_COLOR_GRAY;
@@ -107,31 +108,31 @@ static lv_obj_t *_create_lcd(void)
     lv_obj_t *btn_container = lv_cont_create(frame, NULL);
     lv_obj_set_size(btn_container, 426, 30);
     lv_obj_align(btn_container, frame, LV_ALIGN_IN_BOTTOM_MID, 0, -20);
-    lv_cont_set_style(btn_container, &lv_style_transp_fit);
+    //lv_cont_set_style(btn_container, &lv_style_transp_fit);
 
     lv_obj_t *btn_left = lv_btn_create(btn_container, NULL);
     lv_obj_set_width(btn_left, 80);
     lv_obj_align(btn_left, btn_container, LV_ALIGN_IN_LEFT_MID, 0, 0);
     lv_btn_set_style(btn_left, LV_BTN_STYLE_REL, &button_style);
     lv_btn_set_style(btn_left, LV_BTN_STYLE_PR, &button_pressed_style);
-    lv_btn_set_action(btn_left, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
-    lv_btn_set_action(btn_left, LV_BTN_ACTION_CLICK, __wrap_cb);
+    // lv_btn_set_action(btn_left, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
+    // lv_btn_set_action(btn_left, LV_BTN_ACTION_CLICK, __wrap_cb);
 
     lv_obj_t *btn_center = lv_btn_create(btn_container, NULL);
     lv_obj_set_width(btn_center, 80);
     lv_obj_align(btn_center, btn_container, LV_ALIGN_CENTER, 0, 0);
     lv_btn_set_style(btn_center, LV_BTN_STYLE_REL, &button_style);
     lv_btn_set_style(btn_center, LV_BTN_STYLE_PR, &button_pressed_style);
-    lv_btn_set_action(btn_center, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
-    lv_btn_set_action(btn_center, LV_BTN_ACTION_CLICK, __wrap_cb);
+    //lv_btn_set_action(btn_center, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
+    //lv_btn_set_action(btn_center, LV_BTN_ACTION_CLICK, __wrap_cb);
 
     lv_obj_t *btn_right = lv_btn_create(btn_container, NULL);
     lv_obj_set_width(btn_right, 80);
     lv_obj_align(btn_right, btn_container, LV_ALIGN_IN_RIGHT_MID, 0, 0);
     lv_btn_set_style(btn_right, LV_BTN_STYLE_REL, &button_style);
     lv_btn_set_style(btn_right, LV_BTN_STYLE_PR, &button_pressed_style);
-    lv_btn_set_action(btn_right, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
-    lv_btn_set_action(btn_right, LV_BTN_ACTION_CLICK, __wrap_cb);
+    // lv_btn_set_action(btn_right, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
+    // lv_btn_set_action(btn_right, LV_BTN_ACTION_CLICK, __wrap_cb);
 
     lcd_s_t *lcd = lv_obj_allocate_ext_attr(lcd_dummy, sizeof(lcd_s_t));
     lcd->frame = frame;
@@ -218,13 +219,13 @@ void _lcd_set_center_callback(lv_obj_t *lcd_dummy, lcd_btn_cb_fn_t cb)
 {
     lcd_s_t *lcd = lv_obj_get_ext_attr(lcd_dummy);
     lcd->callbacks[1] = cb;
-    lv_btn_set_action(lcd->btns[1], LV_BTN_ACTION_CLICK, __wrap_cb);
+    //lv_btn_set_action(lcd->btns[1], LV_BTN_ACTION_CLICK, __wrap_cb);
 }
 void _lcd_set_right_callback(lv_obj_t *lcd_dummy, lcd_btn_cb_fn_t cb)
 {
     lcd_s_t *lcd = lv_obj_get_ext_attr(lcd_dummy);
     lcd->callbacks[2] = cb;
-    lv_btn_set_action(lcd->btns[2], LV_BTN_ACTION_CLICK, __wrap_cb);
+    // lv_btn_set_action(lcd->btns[2], LV_BTN_ACTION_CLICK, __wrap_cb);
 }
 
 uint8_t _lcd_read_buttons(lv_obj_t *lcd_dummy)
