@@ -1,5 +1,4 @@
-!/build/SDL2.dll
-build/
+
 bin/
 *.exe
 *.idb
@@ -14,7 +13,18 @@ config.json
 # Compiled Object files
 *.o
 *.obj
+*.json
 
 # Executables
 *.bin
 *.elf
+build/.cmake
+build/CmakeFiles
+build/.ninja_deps
+build/.ninja_log
+build/build.ninja
+build/cmake_install.cmake
+build/CmakeCache.txt
+build/rules.ninja
+
+!/build/SDL2.dll
