@@ -1,0 +1,12 @@
+!/bin/SDL2.dll
+bin/
+/build
+*.exe
+*.idb
+*.ilk
+*.log
+*.obj
+*.pdb
+*.tlog
+/ccls-cache
+config.json

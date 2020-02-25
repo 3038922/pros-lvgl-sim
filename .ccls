@@ -1,0 +1,7 @@
+clang
+%c -std=c11
+%cpp -std=c++2a
+%h %hpp --include=include/main.hpp
+-Iinclude
+-DMACRO
+-D_CRT_SECURE_NO_WARNINGS
