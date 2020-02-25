@@ -18,13 +18,5 @@ config.json
 # Executables
 *.bin
 *.elf
-build/.cmake
-build/CmakeFiles
-build/.ninja_deps
-build/.ninja_log
-build/build.ninja
-build/cmake_install.cmake
-build/CmakeCache.txt
-build/rules.ninja
-
+build/
 !/build/SDL2.dll

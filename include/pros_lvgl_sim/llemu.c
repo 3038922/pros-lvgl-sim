@@ -29,18 +29,19 @@ static lv_style_t screen_style;
 static lv_style_t button_style;
 static lv_style_t button_pressed_style;
 
-static lv_res_t __touch_bits_update_pressed(lv_obj_t *btn)
+static void __touch_bits_update_pressed(lv_obj_t *btn, lv_event_t event)
 {
-    lcd_s_t *lcd = lv_obj_get_ext_attr(lv_obj_get_parent(lv_obj_get_parent(lv_obj_get_parent(btn))));
+    if (event == LV_EVENT_RELEASED)
+    {
+        lcd_s_t *lcd = lv_obj_get_ext_attr(lv_obj_get_parent(lv_obj_get_parent(lv_obj_get_parent(btn))));
 
-    if (btn == lcd->btns[0])
-        lcd->touch_bits |= (1 << 2);
-    else if (btn == lcd->btns[1])
-        lcd->touch_bits |= (1 << 1);
-    else if (btn == lcd->btns[2])
-        lcd->touch_bits |= (1 << 0);
-
-    return LV_RES_OK;
+        if (btn == lcd->btns[0])
+            lcd->touch_bits |= (1 << 2);
+        else if (btn == lcd->btns[1])
+            lcd->touch_bits |= (1 << 1);
+        else if (btn == lcd->btns[2])
+            lcd->touch_bits |= (1 << 0);
+    }
 }
 
 void __touch_bits_update_released(lcd_s_t *lcd, size_t btn)
@@ -48,29 +49,30 @@ void __touch_bits_update_released(lcd_s_t *lcd, size_t btn)
     lcd->touch_bits &= ~(1 << btn);
 }
 
-static lv_res_t __wrap_cb(lv_obj_t *btn)
+static void __wrap_cb(lv_obj_t *btn, lv_event_t event)
 {
-    lcd_s_t *lcd = lv_obj_get_ext_attr(lv_obj_get_parent(lv_obj_get_parent(lv_obj_get_parent(btn))));
-    if (btn == lcd->btns[0])
+    if (event == LV_EVENT_CLICKED)
     {
-        if (lcd->callbacks[0])
-            (lcd->callbacks[0])();
-        __touch_bits_update_released(lcd, 2);
+        lcd_s_t *lcd = lv_obj_get_ext_attr(lv_obj_get_parent(lv_obj_get_parent(lv_obj_get_parent(btn))));
+        if (btn == lcd->btns[0])
+        {
+            if (lcd->callbacks[0])
+                (lcd->callbacks[0])();
+            __touch_bits_update_released(lcd, 2);
+        }
+        else if (btn == lcd->btns[1])
+        {
+            if (lcd->callbacks[1])
+                (lcd->callbacks[1])();
+            __touch_bits_update_released(lcd, 1);
+        }
+        else if (btn == lcd->btns[2])
+        {
+            if (lcd->callbacks[2])
+                (lcd->callbacks[2])();
+            __touch_bits_update_released(lcd, 0);
+        }
     }
-    else if (btn == lcd->btns[1])
-    {
-        if (lcd->callbacks[1])
-            (lcd->callbacks[1])();
-        __touch_bits_update_released(lcd, 1);
-    }
-    else if (btn == lcd->btns[2])
-    {
-        if (lcd->callbacks[2])
-            (lcd->callbacks[2])();
-        __touch_bits_update_released(lcd, 0);
-    }
-
-    return LV_RES_OK;
 }
 
 static lv_obj_t *_create_lcd(void)
@@ -108,31 +110,29 @@ static lv_obj_t *_create_lcd(void)
     lv_obj_t *btn_container = lv_cont_create(frame, NULL);
     lv_obj_set_size(btn_container, 426, 30);
     lv_obj_align(btn_container, frame, LV_ALIGN_IN_BOTTOM_MID, 0, -20);
-    //lv_cont_set_style(btn_container, &lv_style_transp_fit);
+    lv_cont_set_style(btn_container, LV_CONT_STYLE_MAIN, &lv_style_transp_fit); //todo test
 
     lv_obj_t *btn_left = lv_btn_create(btn_container, NULL);
     lv_obj_set_width(btn_left, 80);
     lv_obj_align(btn_left, btn_container, LV_ALIGN_IN_LEFT_MID, 0, 0);
     lv_btn_set_style(btn_left, LV_BTN_STYLE_REL, &button_style);
     lv_btn_set_style(btn_left, LV_BTN_STYLE_PR, &button_pressed_style);
-    // lv_btn_set_action(btn_left, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
-    // lv_btn_set_action(btn_left, LV_BTN_ACTION_CLICK, __wrap_cb);
+    lv_obj_set_event_cb(btn_left, __touch_bits_update_pressed); //TODO TEST
+    lv_obj_set_event_cb(btn_left, __wrap_cb);                   //TODO TEST
 
     lv_obj_t *btn_center = lv_btn_create(btn_container, NULL);
     lv_obj_set_width(btn_center, 80);
     lv_obj_align(btn_center, btn_container, LV_ALIGN_CENTER, 0, 0);
     lv_btn_set_style(btn_center, LV_BTN_STYLE_REL, &button_style);
     lv_btn_set_style(btn_center, LV_BTN_STYLE_PR, &button_pressed_style);
-    //lv_btn_set_action(btn_center, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
-    //lv_btn_set_action(btn_center, LV_BTN_ACTION_CLICK, __wrap_cb);
+    lv_obj_set_event_cb(btn_center, __touch_bits_update_pressed); //TODO TEST
+    lv_obj_set_event_cb(btn_center, __wrap_cb);                   //TODO TEST
 
     lv_obj_t *btn_right = lv_btn_create(btn_container, NULL);
     lv_obj_set_width(btn_right, 80);
     lv_obj_align(btn_right, btn_container, LV_ALIGN_IN_RIGHT_MID, 0, 0);
-    lv_btn_set_style(btn_right, LV_BTN_STYLE_REL, &button_style);
-    lv_btn_set_style(btn_right, LV_BTN_STYLE_PR, &button_pressed_style);
-    // lv_btn_set_action(btn_right, LV_BTN_ACTION_PR, __touch_bits_update_pressed);
-    // lv_btn_set_action(btn_right, LV_BTN_ACTION_CLICK, __wrap_cb);
+    lv_btn_set_style(btn_right, LV_BTN_STYLE_REL, &button_style);        //TODO TEST
+    lv_btn_set_style(btn_right, LV_BTN_STYLE_PR, &button_pressed_style); //TODO TEST
 
     lcd_s_t *lcd = lv_obj_allocate_ext_attr(lcd_dummy, sizeof(lcd_s_t));
     lcd->frame = frame;
@@ -153,7 +153,7 @@ static lv_obj_t *_create_lcd(void)
         lv_obj_align(lcd->lcd_text[i], NULL, LV_ALIGN_IN_TOP_LEFT, 5, 20 * i);
         lv_label_set_align(lcd->lcd_text[i], LV_LABEL_ALIGN_LEFT);
         lv_label_set_long_mode(lcd->lcd_text[i], LV_LABEL_LONG_CROP);
-        // lv_label_set_no_break(lcd->lcd_text[i], true);
+        //lv_label_set_no_break(lcd->lcd_text[i], true);
         lv_label_set_text(lcd->lcd_text[i], "");
     }
 
@@ -219,13 +219,13 @@ void _lcd_set_center_callback(lv_obj_t *lcd_dummy, lcd_btn_cb_fn_t cb)
 {
     lcd_s_t *lcd = lv_obj_get_ext_attr(lcd_dummy);
     lcd->callbacks[1] = cb;
-    //lv_btn_set_action(lcd->btns[1], LV_BTN_ACTION_CLICK, __wrap_cb);
+    lv_obj_set_event_cb(lcd->btns[1], __wrap_cb); //todo test
 }
 void _lcd_set_right_callback(lv_obj_t *lcd_dummy, lcd_btn_cb_fn_t cb)
 {
     lcd_s_t *lcd = lv_obj_get_ext_attr(lcd_dummy);
     lcd->callbacks[2] = cb;
-    // lv_btn_set_action(lcd->btns[2], LV_BTN_ACTION_CLICK, __wrap_cb);
+    lv_obj_set_event_cb(lcd->btns[2], __wrap_cb); //todo test
 }
 
 uint8_t _lcd_read_buttons(lv_obj_t *lcd_dummy)
