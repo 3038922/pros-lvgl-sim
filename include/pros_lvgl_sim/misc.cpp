@@ -1,5 +1,5 @@
 
-#include "pros-lvgl-sim.hpp"
+#include "./pros-lvgl-sim.hpp"
 #if USE_PROS_LVGL_SIM == 1
 #include "pros/misc.hpp"
 extern ncrapi::SimKB simKB;

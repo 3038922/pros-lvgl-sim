@@ -4,16 +4,11 @@
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/keyboard.h"
 #include "lv_drivers/indev/mouse.h"
-
 #include <SDL2/SDL.h>
 #include <conio.h>
 #include <tuple>
 
 namespace ncrapi {
-enum {
-    PWM = 0,
-
-} MOTOR;
 
 class SimData
 {

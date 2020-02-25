@@ -13,14 +13,13 @@ include_directories(
     "./include"
 )
 set(MODE 1)# 1正常编译 2生成静态库
-
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin) #设置二进制文件存放路径 
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/firmware) #设置各种库存放路径
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build) #设置二进制文件存放路径 
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib) #设置各种库存放路径
 if(MODE EQUAL 1)
     #枚举头文件
     file(GLOB_RECURSE INCLUDES "include/*.h" "include/*.hpp")
     #枚举源文件
-    file(GLOB_RECURSE SOURCES "include/lv_examples/*.c" "src/*.c" "src/*.cpp")
+    file(GLOB_RECURSE SOURCES "include/lv_examples/*.c" "include/pros_lvgl_sim/*.c"  "include/pros_lvgl_sim/*.cpp" "src/*.c" "src/*.cpp")
     #添加需要链接的库文件目录 新建好了 链接的时候用
     LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
     #生成可执行文件
