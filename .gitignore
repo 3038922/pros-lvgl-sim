@@ -1,6 +1,6 @@
-!/bin/SDL2.dll
+!/build/SDL2.dll
+build/
 bin/
-/build
 *.exe
 *.idb
 *.ilk
