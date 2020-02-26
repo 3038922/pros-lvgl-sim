@@ -12,9 +12,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#pragma once
-
+#ifndef _PROS_MAIN_H_
+#define _PROS_MAIN_H_
 #include "ncrapi_lvgl_sim_kernel/pros_lvgl_sim_conf.h"
+
 /**
  * If defined, some commonly used enums will have preprocessor macros which give
  * a shorter, more convenient naming pattern. If this isn't desired, simply
@@ -77,3 +78,5 @@ void opcontrol(void);
  */
 //#include <iostream>
 #endif
+
+#endif // _PROS_MAIN_H_
