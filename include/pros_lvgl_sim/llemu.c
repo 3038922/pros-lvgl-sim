@@ -14,7 +14,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "pros_lvgl_sim_conf.hpp"
+#include "pros_lvgl_sim_conf.h"
 #if USE_PROS_LVGL_SIM == 1
 #define _GNU_SOURCE
 // NOTE: this would normally be in the C file, but it won't compile that way

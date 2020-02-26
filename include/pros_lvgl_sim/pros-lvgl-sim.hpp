@@ -1,5 +1,5 @@
 #pragma once
-#include "pros_lvgl_sim_conf.hpp"
+#include "pros_lvgl_sim_conf.h"
 #if USE_PROS_LVGL_SIM == 1
 #include "lv_drivers/display/monitor.h"
 #include "lv_drivers/indev/keyboard.h"
