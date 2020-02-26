@@ -5,7 +5,6 @@
 
 #if USE_PROS_LVGL_SIM == 1
 #define LVGL_INCLUDE_PATH "pros_lvgl_sim/lvgl/lvgl.h"
-#include "./src/pros-lvgl-sim.hpp"
 #else
 #define LVGL_INCLUDE_PATH "display/lvgl.h"
 #endif
