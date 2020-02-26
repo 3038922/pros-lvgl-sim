@@ -100,7 +100,7 @@ void opcontrol()
 }
 
 #else
-#include "pros_lvgl_sim/src/pros-lvgl-sim.hpp"
+#include "ncrapi_lvgl_sim_kernel/src/pros-lvgl-sim.hpp"
 void opcontrol(){};
 int main()
 {

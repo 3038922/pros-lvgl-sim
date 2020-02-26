@@ -1,7 +1,7 @@
 #设置最低的编译版本
 cmake_minimum_required(VERSION 3.10)
 #项目名称
-project(pros_lvgl_sim)
+project(ncrapi_lvgl_sim_kernel)
 #设置c/c++标准
 set(CMAKE_C_STANDARD 11)#C11
 set(CMAKE_CXX_STANDARD 17)#C17
@@ -11,16 +11,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-variable -Wno-unused-functio
 include_directories(
     ${TOOLCHAIN_INC_DIR} 
     "./include"
-    "./include/pros_lvgl_sim"
+    "./include/ncrapi_lvgl_sim_kernel"
 )
 set(MODE 1)# 1正常编译 2生成静态库
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build) #设置二进制文件存放路径 
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/include/pros_lvgl_sim/lib) #设置各种库存放路径
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/include/ncrapi_lvgl_sim_kernel/lib) #设置各种库存放路径
 if(MODE EQUAL 1)
     #枚举头文件
     file(GLOB_RECURSE INCLUDES "include/*.h" "include/*.hpp")
     #枚举源文件
-    file(GLOB_RECURSE SOURCES "include/pros_lvgl_sim/lv_examples/*.c" "include/pros_lvgl_sim/src/*.c"  "include/pros_lvgl_sim/src/*.cpp" "src/*.c" "src/*.cpp")
+    file(GLOB_RECURSE SOURCES "include/ncrapi_lvgl_sim_kernel/lv_examples/*.c" "include/ncrapi_lvgl_sim_kernel/src/*.c"  "include/ncrapi_lvgl_sim_kernel/src/*.cpp" "src/*.c" "src/*.cpp")
     #添加需要链接的库文件目录 新建好了 链接的时候用
     LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
     #生成可执行文件
@@ -44,8 +44,8 @@ if(MODE EQUAL 1)
     add_custom_target (run COMMAND ninja all  COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
 else() 
     #要建立的静态库
-    file(GLOB_RECURSE LIBLVGL "include/pros_lvgl_sim/lvgl/*.c")
-    file(GLOB_RECURSE LIBDRIVERS "include/pros_lvgl_sim/lv_drivers/*.c")
+    file(GLOB_RECURSE LIBLVGL "include/ncrapi_lvgl_sim_kernel/lvgl/*.c")
+    file(GLOB_RECURSE LIBDRIVERS "include/ncrapi_lvgl_sim_kernel/lv_drivers/*.c")
     message(STATUS "LIBLVGL_PATH:${LIBLVGL}")
     message(STATUS "LIBDRIVERS_PATH:${LIBDRIVERS}")
     #file(GLOB_RECURSE LIBRESOURCES "./src/system/logo.c" "./src/system/field.c")

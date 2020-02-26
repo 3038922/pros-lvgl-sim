@@ -1,10 +1,4 @@
 
-[submodule "lvgl"]
-	path = include/pros_lvgl_sim/lvgl
-	url = https://github.com/littlevgl/lvgl.git
-[submodule "lv_examples"]
-	path = include/pros_lvgl_sim/lv_examples
-	url = https://github.com/littlevgl/lv_examples.git
-[submodule "lv_drivers"]
-	path = include/pros_lvgl_sim/lv_drivers
-	url = https://github.com/littlevgl/lv_drivers.git
+[submodule "ncrapi_lvgl_sim_kernel"]
+	path = include/ncrapi_lvgl_sim_kernel
+	url = https://github.com/3038922/ncrapi_lvgl_sim_kernel.git

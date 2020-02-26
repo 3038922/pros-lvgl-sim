@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "pros_lvgl_sim/pros_lvgl_sim_conf.h"
+#include "ncrapi_lvgl_sim_kernel/pros_lvgl_sim_conf.h"
 /**
  * If defined, some commonly used enums will have preprocessor macros which give
  * a shorter, more convenient naming pattern. If this isn't desired, simply
