@@ -3,5 +3,6 @@ clang
 %cpp -std=c++2a
 %h %hpp --include=include/main.hpp
 -Iinclude
+-Iinclude/ncrapi_lvgl_sim_kernel
 -DMACRO
 -D_CRT_SECURE_NO_WARNINGS

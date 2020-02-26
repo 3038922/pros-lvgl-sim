@@ -104,7 +104,7 @@ void opcontrol()
 void opcontrol(){};
 int main()
 {
-    ncrapi::ProsLvglSim *prosLvglSim = ncrapi::ProsLvglSim::initProsLvglSim();
+    ncrapi::NcrLvglSimKernel *prosLvglSim = ncrapi::NcrLvglSimKernel::initNcrLvglSimKernel();
 
     initialize();
     pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -113,7 +113,7 @@ int main()
 
     while (1)
     {
-        ncrapi::ProsLvglSim::loop(&autonomous, &opcontrol, &competition_initialize, &disabled);
+        ncrapi::NcrLvglSimKernel::loop(&autonomous, &opcontrol, &competition_initialize, &disabled);
 
         pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
                          (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
