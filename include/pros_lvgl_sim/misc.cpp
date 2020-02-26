@@ -2,7 +2,7 @@
 #include "./pros-lvgl-sim.hpp"
 #if USE_PROS_LVGL_SIM == 1
 #include "pros/misc.hpp"
-extern ncrapi::SimKB simKB;
+
 namespace pros {
 namespace competition {
 /**
@@ -34,15 +34,15 @@ Controller::Controller(controller_id_e_t id)
 }
 std::int32_t Controller::get_analog(controller_analog_e_t channel)
 {
-    return ncrapi::SimKB::GetSimCh(channel);
+    return ncrapi::ProsLvglSim::GetSimCh(channel);
 }
 std::int32_t Controller::get_digital(controller_digital_e_t button)
 {
-    return ncrapi::SimKB::GetSimDig(button);
+    return ncrapi::ProsLvglSim::GetSimDig(button);
 }
 std::int32_t Controller::get_digital_new_press(pros::controller_digital_e_t button)
 {
-    return ncrapi::SimKB::GetSimDig(button);
+    return ncrapi::ProsLvglSim::GetSimDig(button);
 }
 std::int32_t Controller::rumble(const char *rumble_pattern)
 {

@@ -8,10 +8,10 @@
 #include <conio.h>
 
 namespace ncrapi {
-class SimKB
+class ProsLvglSim
 {
   public:
-    SimKB();
+    ProsLvglSim();
     static void loop(void (*f1)(), void (*f2)(), void (*f3)(), void (*f4)());
     //0 leftX 1 leftY 2 rightX 3 rightY
     static int GetSimCh(int);
@@ -24,17 +24,6 @@ extern "C" {
 LV_IMG_DECLARE(mouse_cursor_icon); /*Declare the image file.*/
 }
 
-/**
- * Print the memory usage periodically
- * @param param
- */
-extern void memory_monitor(lv_task_t *param);
-/**
- * A task to measure the elapsed time for LittlevGL
- * @param data unused
- * @return never return
- */
-extern int tick_thread(void *data);
 extern void hal_init(void);
 void taskLVGL(void *pragma);
 #else

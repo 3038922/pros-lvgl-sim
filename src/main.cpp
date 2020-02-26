@@ -101,24 +101,20 @@ void opcontrol()
 
 #else
 #include "pros_lvgl_sim/pros-lvgl-sim.hpp"
-#include <thread>
+
 void opcontrol(){};
 int main()
-{ /*Initialize LittlevGL*/
-    lv_init();
-    /*Initialize the HAL (display, input devices, tick) for LittlevGL*/
-    hal_init();
-    std::thread mainTask(taskLVGL, nullptr);
-    initialize();
-    ncrapi::SimKB simKB;
+{
+    ncrapi::ProsLvglSim prosLvglSim;
 
+    initialize();
     pros::Controller master(pros::E_CONTROLLER_MASTER);
     pros::Motor left_mtr(1);
     pros::Motor right_mtr(2);
 
     while (1)
     {
-        ncrapi::SimKB::loop(&autonomous, &opcontrol, &competition_initialize, &disabled);
+        ncrapi::ProsLvglSim::loop(&autonomous, &opcontrol, &competition_initialize, &disabled);
 
         pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
                          (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
