@@ -11,15 +11,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-variable -Wno-unused-functio
 include_directories(
     ${TOOLCHAIN_INC_DIR} 
     "./include"
+    "./include/pros_lvgl_sim"
 )
 set(MODE 1)# 1正常编译 2生成静态库
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build) #设置二进制文件存放路径 
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib) #设置各种库存放路径
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/pros_lvgl_sim/lib) #设置各种库存放路径
 if(MODE EQUAL 1)
     #枚举头文件
     file(GLOB_RECURSE INCLUDES "include/*.h" "include/*.hpp")
     #枚举源文件
-    file(GLOB_RECURSE SOURCES "include/lv_examples/*.c" "include/pros_lvgl_sim/*.c"  "include/pros_lvgl_sim/*.cpp" "src/*.c" "src/*.cpp")
+    file(GLOB_RECURSE SOURCES "include/pros_lvgl_sim/lv_examples/*.c" "include/pros_lvgl_sim/src/*.c"  "include/pros_lvgl_sim/src/*.cpp" "src/*.c" "src/*.cpp")
     #添加需要链接的库文件目录 新建好了 链接的时候用
     LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
     #生成可执行文件
@@ -43,8 +44,8 @@ if(MODE EQUAL 1)
     add_custom_target (run COMMAND ninja all  COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
 else() 
     #要建立的静态库
-    file(GLOB_RECURSE LIBLVGL "include/lvgl/*.c")
-    file(GLOB_RECURSE LIBDRIVERS "include/lv_drivers/*.c")
+    file(GLOB_RECURSE LIBLVGL "include/pros_lvgl_sim/lvgl/*.c")
+    file(GLOB_RECURSE LIBDRIVERS "include/pros_lvgl_sim/lv_drivers/*.c")
     message(STATUS "LIBLVGL_PATH:${LIBLVGL}")
     message(STATUS "LIBDRIVERS_PATH:${LIBDRIVERS}")
     #file(GLOB_RECURSE LIBRESOURCES "./src/system/logo.c" "./src/system/field.c")

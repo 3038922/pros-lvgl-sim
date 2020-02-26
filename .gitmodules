@@ -1,10 +1,10 @@
 
 [submodule "lvgl"]
-	path = include/lvgl
+	path = include/pros_lvgl_sim/lvgl
 	url = https://github.com/littlevgl/lvgl.git
 [submodule "lv_examples"]
-	path = include/lv_examples
+	path = include/pros_lvgl_sim/lv_examples
 	url = https://github.com/littlevgl/lv_examples.git
 [submodule "lv_drivers"]
-	path = include/lv_drivers
+	path = include/pros_lvgl_sim/lv_drivers
 	url = https://github.com/littlevgl/lv_drivers.git
