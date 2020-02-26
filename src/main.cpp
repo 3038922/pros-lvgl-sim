@@ -105,7 +105,7 @@ void opcontrol()
 void opcontrol(){};
 int main()
 {
-    ncrapi::ProsLvglSim prosLvglSim;
+    ncrapi::ProsLvglSim *prosLvglSim = ncrapi::ProsLvglSim::initProsLvglSim();
 
     initialize();
     pros::Controller master(pros::E_CONTROLLER_MASTER);

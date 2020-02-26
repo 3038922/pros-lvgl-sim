@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <array>
 #include <iostream>
-#include <thread>
+
 /**
  * Print the memory usage periodically
  * @param param
@@ -98,6 +98,13 @@ lv_indev_drv_t _real_kb_drv;
 lv_indev_data_t _kbDate; //键盘数据
 uint32_t _lastKbVal;
 bool isFirtstRun = true;
+ProsLvglSim *ProsLvglSim::_prosLvglSim = nullptr; // 单例定义
+ProsLvglSim *ProsLvglSim::initProsLvglSim()
+{
+    if (_prosLvglSim == nullptr)
+        _prosLvglSim = new ProsLvglSim();
+    return _prosLvglSim;
+}
 
 ProsLvglSim::ProsLvglSim()
 {
@@ -105,12 +112,18 @@ ProsLvglSim::ProsLvglSim()
     lv_init();
     /*Initialize the HAL (display, input devices, tick) for LittlevGL*/
     hal_init();
-    std::thread *mainTask = new std::thread(taskLVGL, nullptr);
+    _mainTask = new std::thread(taskLVGL, nullptr);
     lv_indev_drv_init(&_real_kb_drv);
     _real_kb_drv.type = LV_INDEV_TYPE_KEYPAD;
     _real_kb_drv.read_cb = keyboard_read;
     _lastKbVal = 0;
     _kbDate.key = 51;
+}
+ProsLvglSim::~ProsLvglSim()
+{
+    _mainTask->detach();
+    delete _mainTask;
+    _mainTask = nullptr;
 }
 void ProsLvglSim::loop(void (*f1)(), void (*f2)(), void (*f3)(), void (*f4)())
 {
