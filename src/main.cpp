@@ -1,5 +1,7 @@
 #include "main.h"
-
+#if USE_PROS_LVGL_SIM == 1
+#include "ncrapi_lvgl_sim_kernel/src/ncrLvglSimKernel.hpp"
+#endif
 /**
  * A callback function for LLEMU's center button.
  *
@@ -86,22 +88,24 @@ void opcontrol()
     pros::Controller master(pros::E_CONTROLLER_MASTER);
     pros::Motor left_mtr(1);
     pros::Motor right_mtr(2);
-
+#if USE_PROS_LVGL_SIM == 1
+    while (ncrapi::NcrLvglSimKernel::isSTop)
+#else
     while (true)
+#endif
     {
         pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
                          (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
                          (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
         int left = master.get_analog(ANALOG_LEFT_Y);
         int right = master.get_analog(ANALOG_RIGHT_Y);
-        std::cout << "op" << std::endl;
         left_mtr = left;
         right_mtr = right;
+        std::cout << "op" << std::endl;
         pros::delay(20);
     }
 }
 #if USE_PROS_LVGL_SIM == 1
-#include "ncrapi_lvgl_sim_kernel/src/ncrLvglSimKernel.hpp"
 int main()
 {
     ncrapi::NcrLvglSimKernel *prosLvglSim = ncrapi::NcrLvglSimKernel::initNcrLvglSimKernel(&initialize, &autonomous, &opcontrol, &competition_initialize, &disabled);
