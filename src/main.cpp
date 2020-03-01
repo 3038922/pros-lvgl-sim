@@ -109,6 +109,6 @@ void opcontrol()
 int main()
 {
     ncrapi::NcrLvglSimKernel *prosLvglSim = ncrapi::NcrLvglSimKernel::initNcrLvglSimKernel(&initialize, &autonomous, &opcontrol, &competition_initialize, &disabled);
-    ncrapi::NcrLvglSimKernel::taskMain(nullptr);
+    prosLvglSim->mainLoop();
 }
 #endif
