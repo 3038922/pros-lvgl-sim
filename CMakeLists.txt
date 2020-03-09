@@ -6,7 +6,6 @@ project(ncrapi_lvgl_sim_kernel)
 set(CMAKE_C_STANDARD 11)#C11
 set(CMAKE_CXX_STANDARD 17)#C17
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-variable -Wno-unused-function -Wunused-private-field")
 #头文件路径
 include_directories(
     ${TOOLCHAIN_INC_DIR} 
@@ -22,7 +21,16 @@ if(MODE EQUAL 1)
     #枚举源文件
     file(GLOB_RECURSE SOURCES "include/ncrapi_lvgl_sim_kernel/lv_examples/*.c" "include/ncrapi_lvgl_sim_kernel/src/*.c"  "include/ncrapi_lvgl_sim_kernel/src/*.cpp" "src/*.c" "src/*.cpp")
     #添加需要链接的库文件目录 新建好了 链接的时候用
-    LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
+    LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH}
+        "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.18362.0/um/x64" 
+        "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.24.28314/lib/x64"
+        "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.24.28314/atlmfc/lib/x64"
+        "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/VS/lib/x64"
+        "C:/Program Files (x86)/Windows Kits/10/lib/10.0.18362.0/ucrt/x64"
+        "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/VS/UnitTest/lib"
+        "C:/Program Files (x86)/Windows Kits/NETFXSDK/4.7.2/lib/um/x64")
+    #关闭警告
+    add_compile_options(-Wno-unused-private-field -Wno-unused-variable)
     #生成可执行文件
     add_executable(main ${SOURCES} ${INCLUDES})
     #链接SDL2的静态库
