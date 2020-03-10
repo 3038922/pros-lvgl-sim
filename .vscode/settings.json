@@ -1,0 +1,11 @@
+{
+    "C_Cpp.autocomplete": "Disabled",
+    "C_Cpp.formatting": "Disabled",
+    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.intelliSenseEngine": "Disabled",
+    //"ccls.misc.compilationDatabaseDirectory": "./build",
+    "files.associations": {
+        "stdexcept": "cpp"
+    },
+    "ccls.misc.compilationDatabaseDirectory": "./build"
+}

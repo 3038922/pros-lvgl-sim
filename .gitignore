@@ -13,7 +13,6 @@ config.json
 # Compiled Object files
 *.o
 *.obj
-*.json
 
 # Executables
 *.bin
