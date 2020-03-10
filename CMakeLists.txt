@@ -31,15 +31,14 @@ LINK_DIRECTORIES(
 #######################加入ncrapi_lvgl_sim_kernel模块#########################
 add_subdirectory ("include/ncrapi_lvgl_sim_kernel")
 set (EXTRA_LIBS ${EXTRA_LIBS} ncrapi_lvgl_sim_kernel)
+
 ############################################################################
 
-#枚举本地头文件
-file(GLOB_RECURSE INCLUDES "include/*.h" "include/*.hpp")
 #枚举本地源文件
 file(GLOB_RECURSE SOURCES "src/*.c" "src/*.cpp")
 
 #生成可执行文件
-add_executable(main ${SOURCES} ${INCLUDES})
+add_executable(main ${SOURCES})
 if(CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
     message(STATUS "linux")
     #寻找sdl2
@@ -50,7 +49,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL Windows)
     message(STATUS "windows")
     #添加-D
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    target_link_libraries(main PRIVATE SDL2 SDL2main lvgl_clang_win drivers_clang_win ${EXTRA_LIBS})#不链接pthread easylog编译报错
+    target_link_libraries(main PRIVATE SDL2 SDL2main lvgl_clang_win drivers_clang_win  ${EXTRA_LIBS})#不链接pthread easylog编译报错
 else()
     message(STATUS "无法判断属于哪种系统!")
 endif()
