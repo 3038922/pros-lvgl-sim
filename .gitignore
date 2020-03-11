@@ -19,3 +19,4 @@ config.json
 *.elf
 build/
 !/build/SDL2.dll
+*.dump

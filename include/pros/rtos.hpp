@@ -30,9 +30,10 @@
 #include <type_traits>
 
 namespace pros {
-class Task {
-	public:
-	/**
+class Task
+{
+  public:
+    /**
 	 * Creates a new task and add it to the list of tasks that are ready to run.
 	 *
 	 * This function uses the following values of errno when an error state is
@@ -57,10 +58,10 @@ class Task {
 	 *        debugging. The name may be up to 32 characters long.
 	 *
 	 */
-	Task(task_fn_t function, void* parameters = NULL, std::uint32_t prio = TASK_PRIORITY_DEFAULT,
-	     std::uint16_t stack_depth = TASK_STACK_DEPTH_DEFAULT, const char* name = "");
+    Task(task_fn_t function, void *parameters = NULL, std::uint32_t prio = TASK_PRIORITY_DEFAULT,
+         std::uint16_t stack_depth = TASK_STACK_DEPTH_DEFAULT, const char *name = "");
 
-	/**
+    /**
 	 * Creates a new task and add it to the list of tasks that are ready to run.
 	 *
 	 * This function uses the following values of errno when an error state is
@@ -79,9 +80,9 @@ class Task {
 	 *        debugging. The name may be up to 32 characters long.
 	 *
 	 */
-	Task(task_fn_t function, void* parameters, const char* name);
+    Task(task_fn_t function, void *parameters, const char *name);
 
-	/**
+    /**
 	 * Creates a new task and add it to the list of tasks that are ready to run.
 	 *
 	 * This function uses the following values of errno when an error state is
@@ -101,19 +102,20 @@ class Task {
 	 *        debugging. The name may be up to 32 characters long.
 	 *
 	 */
-	template <class F>
-	Task(F&& function, std::uint32_t prio = TASK_PRIORITY_DEFAULT, std::uint16_t stack_depth = TASK_STACK_DEPTH_DEFAULT,
-	     const char* name = "")
-	    : Task(
-	          [](void* parameters) {
-		          std::unique_ptr<std::function<void()>> ptr{static_cast<std::function<void()>*>(parameters)};
-		          (*ptr)();
-	          },
-	          new std::function<void()>(std::forward<F>(function)), prio, stack_depth, name) {
-		static_assert(std::is_invocable_r_v<void, F>);
-	}
+    // template <class F>
+    // Task(F &&function, std::uint32_t prio = TASK_PRIORITY_DEFAULT, std::uint16_t stack_depth = TASK_STACK_DEPTH_DEFAULT,
+    //      const char *name = "")
+    //     : Task(
+    //           [](void *parameters) {
+    //               std::unique_ptr<std::function<void()>> ptr{static_cast<std::function<void()> *>(parameters)};
+    //               (*ptr)();
+    //           },
+    //           new std::function<void()>(std::forward<F>(function)), prio, stack_depth, name)
+    // {
+    //     static_assert(std::is_invocable_r_v<void, F>);
+    // }
 
-	/**
+    /**
 	 * Creates a new task and add it to the list of tasks that are ready to run.
 	 *
 	 * This function uses the following values of errno when an error state is
@@ -127,50 +129,50 @@ class Task {
 	 *        debugging. The name may be up to 32 characters long.
 	 *
 	 */
-	template <class F>
-	Task(F&& function, const char* name)
-	    : Task(std::forward<F>(function), TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, name) {}
+    template <class F>
+    Task(F &&function, const char *name)
+        : Task(std::forward<F>(function), TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, name) {}
 
-	/**
+    /**
 	 * Create a C++ task object from a task handle
 	 *
 	 * \param task
 	 *        A task handle from task_create() for which to create a pros::Task
 	 *        object.
 	 */
-	Task(task_t task);
+    Task(task_t task);
 
-	/**
+    /**
 	 * Get the currently running Task
 	 */
-	static Task current();
+    static Task current();
 
-	/**
+    /**
 	 * Creates a new task and add it to the list of tasks that are ready to run.
 	 *
 	 * \param in
 	 *        A task handle from task_create() for which to create a pros::Task
 	 *        object.
 	 */
-	void operator=(const task_t in);
+    void operator=(const task_t in);
 
-	/**
+    /**
 	 * Removes the Task from the RTOS real time kernel's management. This task
 	 * will be removed from all ready, blocked, suspended and event lists.
 	 *
 	 * Memory dynamically allocated by the task is not automatically freed, and
 	 * should be freed before the task is deleted.
 	 */
-	void remove();
+    void remove();
 
-	/**
+    /**
 	 * Gets the priority of the specified task.
 	 *
 	 * \return The priority of the task
 	 */
-	std::uint32_t get_priority(void);
+    std::uint32_t get_priority(void);
 
-	/**
+    /**
 	 * Sets the priority of the specified task.
 	 *
 	 * If the specified task's state is available to be scheduled (e.g. not
@@ -180,43 +182,44 @@ class Task {
 	 * \param prio
 	 *        The new priority of the task
 	 */
-	void set_priority(std::uint32_t prio);
+    void set_priority(std::uint32_t prio);
 
-	/**
+    /**
 	 * Gets the state of the specified task.
 	 *
 	 * \return The state of the task
 	 */
-	std::uint32_t get_state(void);
+    std::uint32_t get_state(void);
 
-	/**
+    /**
 	 * Suspends the specified task, making it ineligible to be scheduled.
 	 */
-	void suspend(void);
+    void suspend(void);
 
-	/**
+    /**
 	 * Resumes the specified task, making it eligible to be scheduled.
 	 *
 	 * \param task
 	 *        The task to resume
 	 */
-	void resume(void);
+    void resume(void);
 
-	/**
+    /**
 	 * Gets the name of the specified task.
 	 *
 	 * \return A pointer to the name of the task
 	 */
-	const char* get_name(void);
+    const char *get_name(void);
 
-	/**
+    /**
 	 * Convert this object to a C task_t handle
 	 */
-	operator task_t() {
-		return task;
-	}
+    operator task_t()
+    {
+        return task;
+    }
 
-	/**
+    /**
 	 * Sends a simple notification to task and increments the notification
 	 * counter.
 	 *
@@ -225,9 +228,9 @@ class Task {
 	 *
 	 * \return Always returns true.
 	 */
-	std::uint32_t notify(void);
+    std::uint32_t notify(void);
 
-	/**
+    /**
 	 * Sends a notification to a task, optionally performing some action. Will
 	 * also retrieve the value of the notification in the target task before
 	 * modifying the notification value.
@@ -249,9 +252,9 @@ class Task {
 	 * needing to overwrite, 1 otherwise.
 	 * For all other NOTIFY_ACTION values: always return 0
 	 */
-	std::uint32_t notify_ext(std::uint32_t value, notify_action_e_t action, std::uint32_t* prev_value);
+    std::uint32_t notify_ext(std::uint32_t value, notify_action_e_t action, std::uint32_t *prev_value);
 
-	/**
+    /**
 	 * Waits for a notification to be nonzero.
 	 *
 	 * See https://pros.cs.purdue.edu/v5/tutorials/topical/notifications.html for
@@ -267,9 +270,9 @@ class Task {
 	 * \return The value of the task's notification value before it is decremented
 	 * or cleared
 	 */
-	std::uint32_t notify_take(bool clear_on_exit, std::uint32_t timeout);
+    std::uint32_t notify_take(bool clear_on_exit, std::uint32_t timeout);
 
-	/**
+    /**
 	 * Clears the notification for a task.
 	 *
 	 * See https://pros.cs.purdue.edu/v5/tutorials/topical/notifications.html for
@@ -277,9 +280,9 @@ class Task {
 	 *
 	 * \return False if there was not a notification waiting, true if there was
 	 */
-	bool notify_clear(void);
+    bool notify_clear(void);
 
-	/**
+    /**
 	 * Delays a task for a given number of milliseconds.
 	 *
 	 * This is not the best method to have a task execute code at predefined
@@ -289,9 +292,9 @@ class Task {
 	 * \param milliseconds
 	 *        The number of milliseconds to wait (1000 milliseconds per second)
 	 */
-	static void delay(const std::uint32_t milliseconds);
+    static void delay(const std::uint32_t milliseconds);
 
-	/**
+    /**
 	 * Delays a task until a specified time.  This function can be used by
 	 * periodic tasks to ensure a constant execution frequency.
 	 *
@@ -304,9 +307,9 @@ class Task {
 	 * \param delta
 	 *        The number of milliseconds to wait (1000 milliseconds per second)
 	 */
-	static void delay_until(std::uint32_t* const prev_time, const std::uint32_t delta);
+    static void delay_until(std::uint32_t *const prev_time, const std::uint32_t delta);
 
-	/**
+    /**
 	 * Gets the number of tasks the kernel is currently managing, including all
 	 * ready, blocked, or suspended tasks. A task that has been deleted, but not
 	 * yet reaped by the idle task will also be included in the count.
@@ -314,17 +317,18 @@ class Task {
 	 *
 	 * \return The number of tasks that are currently being managed by the kernel.
 	 */
-	static std::uint32_t get_count(void);
+    static std::uint32_t get_count(void);
 
-	private:
-	task_t task;
+  private:
+    task_t task;
 };
 
-class Mutex {
-	public:
-	Mutex(void);
+class Mutex
+{
+  public:
+    Mutex(void);
 
-	/**
+    /**
 	 * Takes and locks a mutex, waiting for up to a certain number of milliseconds
 	 * before timing out.
 	 *
@@ -341,9 +345,9 @@ class Mutex {
 	 * is returned, then errno is set with a hint about why the the mutex
 	 * couldn't be taken.
 	 */
-	bool take(std::uint32_t timeout);
+    bool take(std::uint32_t timeout);
 
-	/**
+    /**
 	 * Unlocks a mutex.
 	 *
 	 * See
@@ -354,10 +358,10 @@ class Mutex {
 	 * false is returned, then errno is set with a hint about why the mutex
 	 * couldn't be returned.
 	 */
-	bool give(void);
+    bool give(void);
 
-	private:
-	mutex_t mutex;
+  private:
+    mutex_t mutex;
 };
 
 /**
@@ -378,6 +382,6 @@ using pros::c::millis;
  *        The number of milliseconds to wait (1000 milliseconds per second)
  */
 using pros::c::delay;
-}  // namespace pros
+} // namespace pros
 
-#endif  // _PROS_RTOS_HPP_s
+#endif // _PROS_RTOS_HPP_s

@@ -2,7 +2,7 @@
 #if USE_PROS_LVGL_SIM == 1
 #include "ncrapi_lvgl_sim_kernel/src/ncrLvglSimKernel.hpp"
 extern "C" {
-#include "./freeRTOS/src/main.h"
+#include "freeRTOS/src/main.h"
 }
 #endif
 /**
@@ -91,11 +91,7 @@ void opcontrol()
     pros::Controller master(pros::E_CONTROLLER_MASTER);
     pros::Motor left_mtr(1);
     pros::Motor right_mtr(2);
-#if USE_PROS_LVGL_SIM == 1
-    while (ncrapi::NcrLvglSimKernel::isSTop)
-#else
     while (true)
-#endif
     {
         pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
                          (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
@@ -113,9 +109,8 @@ int main()
 {
     prvInitialiseHeap();
     vTraceEnable(TRC_START);
+    ncrapi::NcrLvglSimKernel *prosLvglSim = ncrapi::NcrLvglSimKernel::initNcrLvglSimKernel();
     vTaskStartScheduler();
-    ncrapi::NcrLvglSimKernel *prosLvglSim = ncrapi::NcrLvglSimKernel::initNcrLvglSimKernel(&initialize, &autonomous, &opcontrol, &competition_initialize, &disabled);
-    prosLvglSim->mainLoop();
     while (1)
         ;
 }
