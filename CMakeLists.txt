@@ -7,6 +7,7 @@ set(CMAKE_C_STANDARD 11)#C11
 set(CMAKE_CXX_STANDARD 17)#C17
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set (AS_A_SUBPROJECT 1)#设置成1 迫使后续模块使用静态库形式导入
 set (MAKE_LVGL_DRIVE_STATIC_LIB OFF)# OFF正常编译 ON生成静态库
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build) #设置二进制文件存放路径 
 #头文件路径
@@ -14,6 +15,7 @@ include_directories(
     ${TOOLCHAIN_INC_DIR} 
     "./include"
     "./include/ncrapi_lvgl_sim_kernel"
+    "./include/ncrapi_lvgl_sim_kernel/freeRTOS/src"
 )
 #关闭警告
 add_compile_options(-Wno-unused-private-field -Wno-unused-variable)
@@ -27,7 +29,10 @@ LINK_DIRECTORIES(
 "C:/Program Files (x86)/Windows Kits/10/lib/10.0.18362.0/ucrt/x64"
 "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/VS/UnitTest/lib"
 "C:/Program Files (x86)/Windows Kits/NETFXSDK/4.7.2/lib/um/x64")
-
+#######################加入freeRTOS模块#########################
+add_subdirectory ("include/ncrapi_lvgl_sim_kernel/freeRTOS")
+set (EXTRA_LIBS ${EXTRA_LIBS} freeRTOS)
+############################################################################
 #######################加入ncrapi_lvgl_sim_kernel模块#########################
 add_subdirectory ("include/ncrapi_lvgl_sim_kernel")
 set (EXTRA_LIBS ${EXTRA_LIBS} ncrapi_lvgl_sim_kernel)
