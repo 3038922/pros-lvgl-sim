@@ -29,37 +29,42 @@ LINK_DIRECTORIES(
 "C:/Program Files (x86)/Windows Kits/10/lib/10.0.18362.0/ucrt/x64"
 "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Auxiliary/VS/UnitTest/lib"
 "C:/Program Files (x86)/Windows Kits/NETFXSDK/4.7.2/lib/um/x64")
+
 #######################加入freeRTOS模块#########################
 add_subdirectory ("include/ncrapi_lvgl_sim_kernel/freeRTOS")
 set (EXTRA_LIBS ${EXTRA_LIBS} freeRTOS)
 ############################################################################
+
 #######################加入ncrapi_lvgl_sim_kernel模块#########################
 add_subdirectory ("include/ncrapi_lvgl_sim_kernel")
 set (EXTRA_LIBS ${EXTRA_LIBS} ncrapi_lvgl_sim_kernel)
 
 ############################################################################
 
-#枚举本地源文件
-file(GLOB_RECURSE SOURCES "src/*.c" "src/*.cpp")
-
-#生成可执行文件
-add_executable(main ${SOURCES})
-if(CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
-    message(STATUS "linux")
-    #寻找sdl2
-    find_package(SDL2 REQUIRED SDL2)
-    include_directories(${SDL2_INCLUDE_DIRS})
-    target_link_libraries(main PRIVATE SDL2 lvgl_gcc drivers_gcc pthread ${EXTRA_LIBS})#不链接pthread easylog编译报错
-elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL Windows)
-    message(STATUS "windows")
-    #添加-D
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    target_link_libraries(main PRIVATE SDL2 SDL2main lvgl_clang_win drivers_clang_win  ${EXTRA_LIBS})#不链接pthread easylog编译报错
+if(NOT MAKE_LVGL_DRIVE_STATIC_LIB)
+    #枚举本地源文件
+    file(GLOB_RECURSE SOURCES "src/*.c" "src/*.cpp")
+    #生成可执行文件
+    add_executable(main ${SOURCES})
+    if(CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
+        message(STATUS "linux")
+        #寻找sdl2
+        find_package(SDL2 REQUIRED SDL2)
+        include_directories(${SDL2_INCLUDE_DIRS})
+        target_link_libraries(main PRIVATE SDL2 lvgl_gcc drivers_gcc pthread ${EXTRA_LIBS})#不链接pthread easylog编译报错
+    elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL Windows)
+        message(STATUS "windows")
+        #添加-D
+        add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+        target_link_libraries(main PRIVATE SDL2 SDL2main lvgl_clang_win drivers_clang_win  ${EXTRA_LIBS})#不链接pthread easylog编译报错
+    else()
+        message(STATUS "无法判断属于哪种系统!")
+    endif()
+    #添加一个run命令
+    add_custom_target (run COMMAND ninja all  COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
 else()
-    message(STATUS "无法判断属于哪种系统!")
+
 endif()
-#添加一个run命令
-add_custom_target (run COMMAND ninja all  COMMAND ${EXECUTABLE_OUTPUT_PATH}/main)
 
 
 
