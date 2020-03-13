@@ -3,6 +3,6 @@ clang
 %cpp -std=c++17
 %h %hpp --include=include/main.hpp
 -Iinclude
--Iinclude/ncrapi_lvgl_sim_kernel
+-Incrapi_lvgl_sim_kernel
 -DMACRO
 -D_CRT_SECURE_NO_WARNINGS
