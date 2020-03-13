@@ -210,7 +210,7 @@ int32_t adi_port_set_value(uint8_t port, int32_t value);
  * In reality, using a zero expression or "false" will work to set a pin to LOW.
  */
 #define LOW 0
-#include "ncrapi_lvgl_sim_kernel/ncr_lvgl_sim_conf.h"
+#include "../ncrapi_lvgl_sim_kernel/ncr_lvgl_sim_conf.h"
 #if USE_PROS_LVGL_SIM == 1
 /**
  * adi_pin_mode() state for a digital input.

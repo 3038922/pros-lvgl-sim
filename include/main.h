@@ -14,7 +14,7 @@
 
 #ifndef _PROS_MAIN_H_
 #define _PROS_MAIN_H_
-#include "ncrapi_lvgl_sim_kernel/ncr_lvgl_sim_conf.h"
+#include "../ncrapi_lvgl_sim_kernel/ncr_lvgl_sim_conf.h"
 
 /**
  * If defined, some commonly used enums will have preprocessor macros which give

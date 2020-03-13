@@ -1,8 +1,8 @@
 #include "main.h"
 #if USE_PROS_LVGL_SIM == 1
-#include "ncrapi_lvgl_sim_kernel/src/ncrLvglSimKernel.hpp"
+#include "../ncrapi_lvgl_sim_kernel/src/ncrLvglSimKernel.hpp"
 extern "C" {
-#include "freeRTOS/src/main.h"
+#include "../ncrapi_lvgl_sim_kernel/freeRTOS/src/main.h"
 }
 #endif
 /**

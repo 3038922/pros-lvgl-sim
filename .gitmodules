@@ -1,4 +1,4 @@
 
 [submodule "ncrapi_lvgl_sim_kernel"]
-	path = include/ncrapi_lvgl_sim_kernel
+	path = ncrapi_lvgl_sim_kernel
 	url = https://github.com/3038922/ncrapi_lvgl_sim_kernel.git

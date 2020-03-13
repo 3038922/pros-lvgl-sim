@@ -29,7 +29,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #pragma GCC diagnostic ignored "-Wignored-qualifiers"
-#include "ncrapi_lvgl_sim_kernel/ncr_lvgl_sim_conf.h"
+#include "../ncrapi_lvgl_sim_kernel/ncr_lvgl_sim_conf.h"
 #include LVGL_INCLUDE_PATH
 #pragma GCC diagnostic pop
 

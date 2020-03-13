@@ -14,14 +14,14 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build) #设置二进制文件�
 include_directories(
     ${TOOLCHAIN_INC_DIR} 
     "./include"
-    "./include/ncrapi_lvgl_sim_kernel"
-    "./include/ncrapi_lvgl_sim_kernel/freeRTOS/src"
+    "./ncrapi_lvgl_sim_kernel"
+    "./ncrapi_lvgl_sim_kernel/freeRTOS/src"
 )
 #关闭警告
 add_compile_options(-Wno-unused-private-field -Wno-unused-variable)
 #添加需要链接的库文件目录 新建好了 链接的时候用
 LINK_DIRECTORIES(
-"./include/ncrapi_lvgl_sim_kernel/lib"
+"./ncrapi_lvgl_sim_kernel/lib"
 "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.18362.0/um/x64" 
 "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.24.28314/lib/x64"
 "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.24.28314/atlmfc/lib/x64"
@@ -31,12 +31,12 @@ LINK_DIRECTORIES(
 "C:/Program Files (x86)/Windows Kits/NETFXSDK/4.7.2/lib/um/x64")
 
 #######################加入freeRTOS模块#########################
-add_subdirectory ("include/ncrapi_lvgl_sim_kernel/freeRTOS")
+add_subdirectory ("./ncrapi_lvgl_sim_kernel/freeRTOS")
 set (EXTRA_LIBS ${EXTRA_LIBS} freeRTOS)
 ############################################################################
 
 #######################加入ncrapi_lvgl_sim_kernel模块#########################
-add_subdirectory ("include/ncrapi_lvgl_sim_kernel")
+add_subdirectory ("./ncrapi_lvgl_sim_kernel")
 set (EXTRA_LIBS ${EXTRA_LIBS} ncrapi_lvgl_sim_kernel)
 
 ############################################################################
