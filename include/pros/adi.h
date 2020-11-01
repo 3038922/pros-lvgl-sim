@@ -33,10 +33,10 @@ namespace pros {
  * Represents the port type for an ADI port.
  */
 typedef enum adi_port_config_e {
-	E_ADI_ANALOG_IN = 0,
-	E_ADI_ANALOG_OUT = 1,
-	E_ADI_DIGITAL_IN = 2,
-	E_ADI_DIGITAL_OUT = 3,
+    E_ADI_ANALOG_IN = 0,
+    E_ADI_ANALOG_OUT = 1,
+    E_ADI_DIGITAL_IN = 2,
+    E_ADI_DIGITAL_OUT = 3,
 
 #ifdef _INTELLISENSE
 #define _DEPRECATE_DIGITAL_IN = E_ADI_DIGITAL_IN
@@ -46,27 +46,27 @@ typedef enum adi_port_config_e {
 #define _DEPRECATE_ANALOG_IN __attribute__((deprecated("use E_ADI_ANALOG_IN instead"))) = E_ADI_ANALOG_IN
 #endif
 
-	E_ADI_SMART_BUTTON _DEPRECATE_DIGITAL_IN,
-	E_ADI_SMART_POT _DEPRECATE_ANALOG_IN,
+    E_ADI_SMART_BUTTON _DEPRECATE_DIGITAL_IN,
+    E_ADI_SMART_POT _DEPRECATE_ANALOG_IN,
 
-	E_ADI_LEGACY_BUTTON _DEPRECATE_DIGITAL_IN,
-	E_ADI_LEGACY_POT _DEPRECATE_ANALOG_IN,
-	E_ADI_LEGACY_LINE_SENSOR _DEPRECATE_ANALOG_IN,
-	E_ADI_LEGACY_LIGHT_SENSOR _DEPRECATE_ANALOG_IN,
-	E_ADI_LEGACY_GYRO = 10,
-	E_ADI_LEGACY_ACCELEROMETER _DEPRECATE_ANALOG_IN,
+    E_ADI_LEGACY_BUTTON _DEPRECATE_DIGITAL_IN,
+    E_ADI_LEGACY_POT _DEPRECATE_ANALOG_IN,
+    E_ADI_LEGACY_LINE_SENSOR _DEPRECATE_ANALOG_IN,
+    E_ADI_LEGACY_LIGHT_SENSOR _DEPRECATE_ANALOG_IN,
+    E_ADI_LEGACY_GYRO = 10,
+    E_ADI_LEGACY_ACCELEROMETER _DEPRECATE_ANALOG_IN,
 
 #undef _DEPRECATE_DIGITAL_IN
 #undef _DEPRECATE_ANALOG_IN
 
-	E_ADI_LEGACY_SERVO = 12,
-	E_ADI_LEGACY_PWM = 13,
+    E_ADI_LEGACY_SERVO = 12,
+    E_ADI_LEGACY_PWM = 13,
 
-	E_ADI_LEGACY_ENCODER = 14,
-	E_ADI_LEGACY_ULTRASONIC = 15,
+    E_ADI_LEGACY_ENCODER = 14,
+    E_ADI_LEGACY_ULTRASONIC = 15,
 
-	E_ADI_TYPE_UNDEFINED = 255,
-	E_ADI_ERR = PROS_ERR
+    E_ADI_TYPE_UNDEFINED = 255,
+    E_ADI_ERR = PROS_ERR
 } adi_port_config_e_t;
 
 #ifdef PROS_USE_SIMPLE_NAMES
@@ -211,7 +211,26 @@ int32_t adi_port_set_value(uint8_t port, int32_t value);
  * In reality, using a zero expression or "false" will work to set a pin to LOW.
  */
 #define LOW 0
+#include "../ncrapi_lvgl_sim_kernel/ncr_lvgl_sim_conf.h"
+#if USE_PROS_LVGL_SIM == 1
+/**
+ * adi_pin_mode() state for a digital input.
+ */
+#define PROS_INPUT 0x00
+/**
+ * adi_pin_mode() state for a digital output.
+ */
+#define PROS_OUTPUT 0x01
+/**
+ * adi_pin_mode() state for an analog input.
+ */
+#define PROS_INPUT_ANALOG 0x02
 
+/**
+ * adi_pin_mode() state for an analog output.
+ */
+#define PROS_OUTPUT_ANALOG 0x03
+#else
 /**
  * adi_pin_mode() state for a digital input.
  */
@@ -229,7 +248,7 @@ int32_t adi_port_set_value(uint8_t port, int32_t value);
  * adi_pin_mode() state for an analog output.
  */
 #define OUTPUT_ANALOG 0x03
-
+#endif
 /**
  * Calibrates the analog sensor on the specified port and returns the new
  * calibration value.
@@ -690,9 +709,9 @@ int32_t adi_gyro_reset(adi_gyro_t gyro);
 int32_t adi_gyro_shutdown(adi_gyro_t gyro);
 
 #ifdef __cplusplus
-}  // namespace c
-}  // namespace pros
+} // namespace c
+} // namespace pros
 }
 #endif
 
-#endif  // _PROS_ADI_H_
+#endif // _PROS_ADI_H_
