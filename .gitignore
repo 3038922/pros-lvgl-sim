@@ -1,15 +1,3 @@
-
-bin/
-*.exe
-*.idb
-*.ilk
-*.log
-*.obj
-*.pdb
-*.tlog
-/ccls-cache
-config.json
-.d/
 # Compiled Object files
 *.o
 *.obj
@@ -17,6 +5,17 @@ config.json
 # Executables
 *.bin
 *.elf
+
+# PROS
+bin/
+.vscode/
+compile_commands.json
+temp.log
+temp.errors
+*.ini
+.d/
+
 build/
 !/build/SDL2.dll
 *.dump
+/ccls-cache
