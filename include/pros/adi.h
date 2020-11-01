@@ -231,6 +231,7 @@ int32_t adi_port_set_value(uint8_t port, int32_t value);
  */
 #define PROS_OUTPUT_ANALOG 0x03
 #else
+
 /**
  * adi_pin_mode() state for a digital input.
  */
