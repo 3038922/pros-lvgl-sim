@@ -18,7 +18,7 @@ include_directories(
     "./ncrapi_lvgl_sim_kernel/freeRTOS/src"
 )
 #关闭警告
-add_compile_options(-Wno-unused-private-field -Wno-unused-variable)
+add_compile_options(-Wno-unused-private-field -Wno-unused-variable -Wno-deprecated-declarations -Wno-unused-function -Wno-implicit-function-declaration)
 #添加需要链接的库文件目录 新建好了 链接的时候用
 LINK_DIRECTORIES(
 "./ncrapi_lvgl_sim_kernel/lib"
