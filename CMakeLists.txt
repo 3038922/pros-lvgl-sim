@@ -43,7 +43,11 @@ set (EXTRA_LIBS ${EXTRA_LIBS} ncrapi_lvgl_sim_kernel)
 
 if(NOT MAKE_LVGL_DRIVE_STATIC_LIB)
     #枚举本地源文件
-    file(GLOB_RECURSE SOURCES "src/*.c" "src/*.cpp")
+    file(GLOB_RECURSE SOURCES 
+    "src/*.c"
+    "src/*.cpp" 
+    "ncrapi_lvgl_sim_kernel/lvgl/src/*.c"
+    "ncrapi_lvgl_sim_kernel/lv_drivers/*.c")
     #生成可执行文件
     add_executable(main ${SOURCES})
     if(CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
@@ -56,7 +60,7 @@ if(NOT MAKE_LVGL_DRIVE_STATIC_LIB)
         message(STATUS "windows")
         #添加-D
         add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-        target_link_libraries(main PRIVATE SDL2 SDL2main lvgl_clang_win drivers_clang_win  ${EXTRA_LIBS})#不链接pthread easylog编译报错
+        target_link_libraries(main PRIVATE SDL2 SDL2main ${EXTRA_LIBS})#不链接pthread easylog编译报错
     else()
         message(STATUS "无法判断属于哪种系统!")
     endif()
