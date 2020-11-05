@@ -15,7 +15,10 @@ include_directories(
     ${TOOLCHAIN_INC_DIR} 
     "./include"
     "./ncrapi_lvgl_sim_kernel"
-    "./ncrapi_lvgl_sim_kernel/freeRTOS/src"
+    "./ncrapi_lvgl_sim_kernel/freeRTOS/src/Configuration Files"
+    "./ncrapi_lvgl_sim_kernel/freeRTOS/src/External dependence"
+    "./ncrapi_lvgl_sim_kernel/freeRTOS/src/FreeRTOS/include"
+    "./ncrapi_lvgl_sim_kernel/freeRTOS/src/useInit"
 )
 #关闭警告
 add_compile_options(-Wno-unused-private-field -Wno-unused-variable -Wno-deprecated-declarations -Wno-unused-function -Wno-implicit-function-declaration)
@@ -45,9 +48,7 @@ if(NOT MAKE_LVGL_DRIVE_STATIC_LIB)
     #枚举本地源文件
     file(GLOB_RECURSE SOURCES 
     "src/*.c"
-    "src/*.cpp" 
-    "ncrapi_lvgl_sim_kernel/lvgl/src/*.c"
-    "ncrapi_lvgl_sim_kernel/lv_drivers/*.c")
+    "src/*.cpp" )
     #生成可执行文件
     add_executable(main ${SOURCES})
     if(CMAKE_HOST_SYSTEM_NAME STREQUAL Linux)
@@ -60,7 +61,7 @@ if(NOT MAKE_LVGL_DRIVE_STATIC_LIB)
         message(STATUS "windows")
         #添加-D
         add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-        target_link_libraries(main PRIVATE SDL2 SDL2main ${EXTRA_LIBS})#不链接pthread easylog编译报错
+        target_link_libraries(main PRIVATE SDL2 SDL2main drivers_clang_win lvgl_clang_win ${EXTRA_LIBS})#不链接pthread easylog编译报错
     else()
         message(STATUS "无法判断属于哪种系统!")
     endif()

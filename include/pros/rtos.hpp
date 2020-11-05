@@ -102,18 +102,18 @@ class Task
 	 *        debugging. The name may be up to 32 characters long.
 	 *
 	 */
-    // template <class F>
-    // Task(F &&function, std::uint32_t prio = TASK_PRIORITY_DEFAULT, std::uint16_t stack_depth = TASK_STACK_DEPTH_DEFAULT,
-    //      const char *name = "")
-    //     : Task(
-    //           [](void *parameters) {
-    //               std::unique_ptr<std::function<void()>> ptr{static_cast<std::function<void()> *>(parameters)};
-    //               (*ptr)();
-    //           },
-    //           new std::function<void()>(std::forward<F>(function)), prio, stack_depth, name)
-    // {
-    //     static_assert(std::is_invocable_r_v<void, F>);
-    // }
+    template <class F>
+    Task(F &&function, std::uint32_t prio = TASK_PRIORITY_DEFAULT, std::uint16_t stack_depth = TASK_STACK_DEPTH_DEFAULT,
+         const char *name = "")
+        : Task(
+              [](void *parameters) {
+                  std::unique_ptr<std::function<void()>> ptr{static_cast<std::function<void()> *>(parameters)};
+                  (*ptr)();
+              },
+              new std::function<void()>(std::forward<F>(function)), prio, stack_depth, name)
+    {
+        static_assert(std::is_invocable_r_v<void, F>);
+    }
 
     /**
 	 * Creates a new task and add it to the list of tasks that are ready to run.
@@ -361,7 +361,7 @@ class Mutex
     bool give(void);
 
   private:
-    mutex_t mutex;
+    std::shared_ptr<std::remove_pointer_t<mutex_t>> mutex;
 };
 
 /**
